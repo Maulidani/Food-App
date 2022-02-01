@@ -15,7 +15,8 @@
         <activity android:name=".ui.ProfileActivity" />
         <activity android:name=".ui.admin.InputEditFoodActivity" />
         <activity android:name=".ui.admin.HomeAdminActivity" />
-        <activity android:name=".ui.SplashScreenActivity" >
+        <activity android:name=".ui.LoginActivity" />
+        <activity android:name=".ui.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
