@@ -12,7 +12,7 @@
         <activity android:name=".ui.user.FoodDetailActivity"></activity>
         <activity android:name=".ui.user.HomeUserActivity" />
         <activity android:name=".ui.admin.FoodActivity" />
-        <activity android:name=".ui.admin.ProfileActivity" />
+        <activity android:name=".ui.ProfileActivity" />
         <activity android:name=".ui.admin.InputEditFoodActivity" />
         <activity android:name=".ui.admin.HomeAdminActivity" />
         <activity android:name=".ui.SplashScreenActivity" >

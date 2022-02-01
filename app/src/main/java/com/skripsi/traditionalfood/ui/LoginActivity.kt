@@ -1,4 +1,4 @@
-package com.skripsi.traditionalfood.ui.admin
+package com.skripsi.traditionalfood.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.skripsi.traditionalfood.R
