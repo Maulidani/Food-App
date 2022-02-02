@@ -6,7 +6,7 @@
     android:id="@+id/itemCardProduct"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="2dp"
+    android:layout_margin="3dp"
     app:cardCornerRadius="12dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +25,7 @@
             tools:visibility="visible" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgProduct"
+            android:id="@+id/imgFoods"
             android:layout_width="100dp"
             android:layout_height="70dp"
             android:layout_marginTop="12dp"
@@ -44,9 +44,9 @@
             android:gravity="center"
             android:textColor="@color/black"
             android:textSize="12sp"
-            app:layout_constraintLeft_toLeftOf="@id/imgProduct"
-            app:layout_constraintRight_toRightOf="@id/imgProduct"
-            app:layout_constraintTop_toBottomOf="@id/imgProduct"
+            app:layout_constraintLeft_toLeftOf="@id/imgFoods"
+            app:layout_constraintRight_toRightOf="@id/imgFoods"
+            app:layout_constraintTop_toBottomOf="@id/imgFoods"
             tools:text="Nama Makanan" />
 
 

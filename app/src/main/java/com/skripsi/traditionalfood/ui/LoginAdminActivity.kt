@@ -12,6 +12,7 @@ import com.skripsi.traditionalfood.R
 import com.skripsi.traditionalfood.model.DataModel
 import com.skripsi.traditionalfood.model.ResponseAuthModel
 import com.skripsi.traditionalfood.network.ApiClient
+import com.skripsi.traditionalfood.ui.admin.HomeAdminActivity
 import com.skripsi.traditionalfood.ui.user.HomeUserActivity
 import com.skripsi.traditionalfood.utils.Constant
 import com.skripsi.traditionalfood.utils.PreferencesHelper
@@ -19,39 +20,30 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginActivity : AppCompatActivity() {
+class LoginAdminActivity : AppCompatActivity() {
+
     private lateinit var sharedPref: PreferencesHelper
 
     private val inputEmail: TextInputEditText by lazy { findViewById(R.id.inputEmail) }
     private val inputPassword: TextInputEditText by lazy { findViewById(R.id.inputPassword) }
     private val btnLogin: MaterialButton by lazy { findViewById(R.id.btnLogin) }
-    private val btnRegister: MaterialButton by lazy { findViewById(R.id.btnRegister) }
-    private val loginAdmin: TextView by lazy { findViewById(R.id.tvLoginAdmin) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-        supportActionBar?.hide()
+        setContentView(R.layout.activity_login_admin)
+        supportActionBar?.title = "Masuk Admin"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         sharedPref = PreferencesHelper(this)
 
         btnLogin.setOnClickListener {
             val email = inputEmail.text.toString()
             val password = inputPassword.text.toString()
-            val type = "user"
+            val type = "admin"
 
             login(email, password, type)
         }
-        btnRegister.setOnClickListener {
-            startActivity(Intent(this, ProfileActivity::class.java))
-        }
-
-        loginAdmin.setOnClickListener {
-            startActivity(Intent(this, LoginAdminActivity::class.java))
-
-        }
     }
-
     private fun login(email: String, password: String, type: String) {
 
         ApiClient.instances.login(email, password, type)
@@ -68,18 +60,18 @@ class LoginActivity : AppCompatActivity() {
                             saveSession(data!!)
                         } else {
 
-                            Toast.makeText(this@LoginActivity, "gagal", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@LoginAdminActivity, "gagal", Toast.LENGTH_SHORT).show()
 
                         }
                     } else {
-                        Toast.makeText(this@LoginActivity, "gagal", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@LoginAdminActivity, "gagal", Toast.LENGTH_SHORT).show()
 
                     }
                 }
 
                 override fun onFailure(call: Call<ResponseAuthModel>, t: Throwable) {
 
-                    Toast.makeText(this@LoginActivity, t.message.toString(), Toast.LENGTH_SHORT)
+                    Toast.makeText(this@LoginAdminActivity, t.message.toString(), Toast.LENGTH_SHORT)
                         .show()
                 }
             })
@@ -96,17 +88,13 @@ class LoginActivity : AppCompatActivity() {
         sharedPref.put(Constant.PREF_IS_LOGIN, true)
         Log.e(this.toString(), "data: $data")
 
-        startActivity(Intent(this, HomeUserActivity::class.java))
+        startActivity(Intent(this, HomeAdminActivity::class.java))
 
         finish()
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        if (sharedPref.getBoolean(Constant.PREF_IS_LOGIN)) {
-            finish()
-        }
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
-
 }
