@@ -251,6 +251,7 @@ class ProfileActivity : AppCompatActivity() {
                             startActivity(
                                 Intent(applicationContext, LoginActivity::class.java)
                             )
+                            finish()
                         } else {
                             Toast.makeText(applicationContext, "gagal", Toast.LENGTH_SHORT).show()
                         }
