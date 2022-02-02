@@ -28,7 +28,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeAdminActivity : AppCompatActivity() {
+class HomeAdminActivity : AppCompatActivity(), AdapterFood.IUserRecycler {
     private lateinit var sharedPref: PreferencesHelper
 
     private lateinit var toggle: ActionBarDrawerToggle
@@ -113,7 +113,7 @@ class HomeAdminActivity : AppCompatActivity() {
 
                     if (error == false) {
 
-                        val adapter = data?.let { AdapterFood(it, type!!) }
+                        val adapter = data?.let { AdapterFood(it, type!!, this@HomeAdminActivity) }
                         rv.layoutManager = GridLayoutManager(this@HomeAdminActivity, 2)
                         rv.adapter = adapter
 
@@ -143,5 +143,9 @@ class HomeAdminActivity : AppCompatActivity() {
         if (!sharedPref.getBoolean(Constant.PREF_IS_LOGIN)) {
             finish()
         }
+    }
+
+    override fun refreshView(onUpdate: Boolean) {
+        food("")
     }
 }

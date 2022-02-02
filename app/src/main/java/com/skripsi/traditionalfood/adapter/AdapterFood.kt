@@ -25,7 +25,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AdapterFood(private val list: List<DataModel>, type:String) :
+class AdapterFood(
+    private val list: List<DataModel>,
+    type: String,
+    private val mListener: AdapterFood.IUserRecycler
+) :
     RecyclerView.Adapter<AdapterFood.ListViewHolder>() {
 
     val _type = type
@@ -132,6 +136,7 @@ class AdapterFood(private val list: List<DataModel>, type:String) :
             ) {
                 if (response.isSuccessful) {
 
+                    mListener.refreshView(true)
                     notifyDataSetChanged()
                 } else {
                     Toast.makeText(itemView.context, "gagal", Toast.LENGTH_SHORT).show()
@@ -143,5 +148,9 @@ class AdapterFood(private val list: List<DataModel>, type:String) :
 
             }
         })
+    }
+
+    interface IUserRecycler {
+        fun refreshView(onUpdate: Boolean)
     }
 }

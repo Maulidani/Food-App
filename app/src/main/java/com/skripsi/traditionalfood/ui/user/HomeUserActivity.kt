@@ -29,7 +29,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeUserActivity : AppCompatActivity() {
+class HomeUserActivity : AppCompatActivity(), AdapterFood.IUserRecycler {
     private lateinit var sharedPref: PreferencesHelper
 
     private val rv: RecyclerView by lazy { findViewById(R.id.rvFood) }
@@ -103,7 +103,7 @@ class HomeUserActivity : AppCompatActivity() {
 
                     if (error == false) {
 
-                        val adapter = data?.let { AdapterFood(it, type!!) }
+                        val adapter = data?.let { AdapterFood(it, type!!, this@HomeUserActivity) }
                         rv.layoutManager = GridLayoutManager(this@HomeUserActivity, 2)
                         rv.adapter = adapter
 
@@ -132,5 +132,9 @@ class HomeUserActivity : AppCompatActivity() {
         if (!sharedPref.getBoolean(Constant.PREF_IS_LOGIN)) {
             finish()
         }
+    }
+
+    override fun refreshView(onUpdate: Boolean) {
+        food("")
     }
 }
