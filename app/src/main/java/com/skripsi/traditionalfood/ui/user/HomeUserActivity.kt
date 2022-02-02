@@ -17,6 +17,7 @@ import com.skripsi.traditionalfood.adapter.AdapterFood
 import com.skripsi.traditionalfood.model.DataModel
 import com.skripsi.traditionalfood.model.ResponseFoodModel
 import com.skripsi.traditionalfood.network.ApiClient
+import com.skripsi.traditionalfood.ui.LoginActivity
 import com.skripsi.traditionalfood.ui.ProfileActivity
 import com.skripsi.traditionalfood.ui.admin.InputEditFoodActivity
 import com.skripsi.traditionalfood.utils.Constant
@@ -74,6 +75,9 @@ class HomeUserActivity : AppCompatActivity() {
                 1 -> {
                     sharedPref.logout()
                     Toast.makeText(this, "Keluar", Toast.LENGTH_SHORT).show()
+                    startActivity(
+                        Intent(this, LoginActivity::class.java)
+                    )
                     finish()
                 }
             }
@@ -81,8 +85,6 @@ class HomeUserActivity : AppCompatActivity() {
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
-
-
 
 
     private fun food(searchString: String) {

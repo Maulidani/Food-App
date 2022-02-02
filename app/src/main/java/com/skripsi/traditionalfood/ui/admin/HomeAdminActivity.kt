@@ -20,6 +20,7 @@ import com.skripsi.traditionalfood.R
 import com.skripsi.traditionalfood.adapter.AdapterFood
 import com.skripsi.traditionalfood.model.ResponseFoodModel
 import com.skripsi.traditionalfood.network.ApiClient
+import com.skripsi.traditionalfood.ui.LoginActivity
 import com.skripsi.traditionalfood.ui.ProfileActivity
 import com.skripsi.traditionalfood.utils.Constant
 import com.skripsi.traditionalfood.utils.PreferencesHelper
@@ -66,6 +67,9 @@ class HomeAdminActivity : AppCompatActivity() {
                 R.id.navLogout -> {
                     sharedPref.logout()
                     Toast.makeText(this, "Keluar", Toast.LENGTH_SHORT).show()
+                    startActivity(
+                        Intent(this, LoginActivity::class.java)
+                    )
                     finish()
                 }
             }
