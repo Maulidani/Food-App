@@ -3,7 +3,8 @@ package com.skripsi.traditionalfood.utils
 
 class Constant {
     companion object {
-        const val BASE_URL = "http://192.168.228.5:8000/"
+        const val BASE_URL = "https://testing-app-bosku.000webhostapp.com/Traditional-Food/public/"
+//        const val BASE_URL = "http://192.168.228.5:8000/"
 
         const val URL_IMAGE_USER = BASE_URL + "app/image/user/"
         const val URL_IMAGE_FOOD = BASE_URL + "app/image/food/"
