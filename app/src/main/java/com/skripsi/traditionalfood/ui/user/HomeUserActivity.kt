@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -34,6 +35,7 @@ class HomeUserActivity : AppCompatActivity(), AdapterFood.IUserRecycler {
 
     private val rv: RecyclerView by lazy { findViewById(R.id.rvFood) }
     private val search: EditText by lazy { findViewById(R.id.etSearch) }
+    private val notFound: TextView by lazy { findViewById(R.id.tvNotFound) }
 
     private val imgMore: ImageView by lazy { findViewById(R.id.imgMore) }
 
@@ -106,6 +108,13 @@ class HomeUserActivity : AppCompatActivity(), AdapterFood.IUserRecycler {
                         val adapter = data?.let { AdapterFood(it, type!!, this@HomeUserActivity) }
                         rv.layoutManager = GridLayoutManager(this@HomeUserActivity, 2)
                         rv.adapter = adapter
+
+                        if ("${data?.size}" == "0") {
+                            notFound.visibility = View.VISIBLE
+                        }
+                        else {
+                            notFound.visibility = View.INVISIBLE
+                        }
 
                     } else {
                         Toast.makeText(this@HomeUserActivity, "gagal", Toast.LENGTH_SHORT).show()

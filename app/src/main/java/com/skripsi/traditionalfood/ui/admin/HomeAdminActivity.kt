@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -37,6 +38,7 @@ class HomeAdminActivity : AppCompatActivity(), AdapterFood.IUserRecycler {
 
     private val rv: RecyclerView by lazy { findViewById(R.id.rvFood) }
     private val search: EditText by lazy { findViewById(R.id.etSearch) }
+    private val notFound: TextView by lazy { findViewById(R.id.tvNotFound) }
 
     private val fabAdd: FloatingActionButton by lazy { findViewById(R.id.fabAdd) }
 
@@ -113,9 +115,16 @@ class HomeAdminActivity : AppCompatActivity(), AdapterFood.IUserRecycler {
 
                     if (error == false) {
 
-                        val adapter = data?.let { AdapterFood(it, type!!, this@HomeAdminActivity) }
+                        val adapter =
+                            data?.let { AdapterFood(it, type!!, this@HomeAdminActivity) }
                         rv.layoutManager = GridLayoutManager(this@HomeAdminActivity, 2)
                         rv.adapter = adapter
+
+                        if ("${data?.size}" == "0") {
+                            notFound.visibility = View.VISIBLE
+                        } else {
+                            notFound.visibility = View.INVISIBLE
+                        }
 
                     } else {
                         Toast.makeText(this@HomeAdminActivity, "gagal", Toast.LENGTH_SHORT).show()
