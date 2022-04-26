@@ -3,6 +3,7 @@ package com.skripsi.traditionalfood.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import com.skripsi.traditionalfood.R
 import com.skripsi.traditionalfood.ui.admin.HomeAdminActivity
 import com.skripsi.traditionalfood.ui.user.HomeUserActivity
@@ -27,21 +28,29 @@ class SplashScreenActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.Main).launch {
             delay(2500)
 
-            if (sharedPref.getBoolean(Constant.PREF_IS_LOGIN)) {
+            loadFragment(SplashScreenFragment())
 
-                val type = sharedPref.getString(Constant.PREF_TYPE)
-                if (type == "admin") {
-                    startActivity(Intent(this@SplashScreenActivity, HomeAdminActivity::class.java))
-                } else {
-                    startActivity(Intent(this@SplashScreenActivity, HomeUserActivity::class.java))
-                }
-
-            } else {
-                startActivity(Intent(this@SplashScreenActivity, LoginActivity::class.java))
-            }
-
-            finish()
+//            if (sharedPref.getBoolean(Constant.PREF_IS_LOGIN)) {
+//
+//                val type = sharedPref.getString(Constant.PREF_TYPE)
+//                if (type == "admin") {
+//                    startActivity(Intent(this@SplashScreenActivity, HomeAdminActivity::class.java))
+//                } else {
+//                    startActivity(Intent(this@SplashScreenActivity, HomeUserActivity::class.java))
+//                }
+//
+//            } else {
+//                startActivity(Intent(this@SplashScreenActivity, LoginActivity::class.java))
+//            }
+//
+//            finish()
         }
     }
 
+    private fun loadFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.frame, fragment)
+            commit()
+        }
+    }
 }

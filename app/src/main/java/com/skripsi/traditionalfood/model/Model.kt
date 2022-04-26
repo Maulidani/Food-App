@@ -16,6 +16,7 @@ data class DataModel(
     val id: Int,
     val id_image_user: Int?,
     val name: String, //also user
+    val category: String, //also user
     val image: String, //also user
     val description: String?,
     val recipe: String?,

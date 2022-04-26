@@ -7,7 +7,6 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
-
 interface ApiService {
 
     //user
@@ -47,10 +46,17 @@ interface ApiService {
     ): Call<ResponseAuthModel>
 
     //food
+//    @FormUrlEncoded
+//    @POST("show-food")
+//    fun showFood(
+//        @Field("search") search: String,
+//    ): Call<ResponseFoodModel>
+
     @FormUrlEncoded
-    @POST("show-food")
-    fun showFood(
+    @POST("show-food-category")
+    fun showFoodCategory(
         @Field("search") search: String,
+        @Field("category") category: String,
     ): Call<ResponseFoodModel>
 
     @Multipart
@@ -58,6 +64,7 @@ interface ApiService {
     fun uploadFood(
         @Part("id_admin_user") idAdmin: RequestBody,
         @Part("name") name: RequestBody,
+        @Part("category") category: RequestBody,
         @Part parts: MultipartBody.Part,
         @Part("description") description: RequestBody,
         @Part("recipe") recipe: RequestBody,
@@ -67,6 +74,7 @@ interface ApiService {
     @POST("edit-food")
     fun editFood(
         @Field("name") name: String,
+        @Field("category") category: String,
         @Field("description") description: String,
         @Field("recipe") recipe: String,
         @Field("id") id: Int,

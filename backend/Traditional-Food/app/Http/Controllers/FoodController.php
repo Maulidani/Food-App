@@ -20,6 +20,24 @@ class FoodController extends Controller
         ]);
 
     }
+    public function indexCategory(Request $request)
+    {
+        $category= $request->category;
+        $search= $request->search;
+        $product = Foods::orderBy('created_at', 'DESC')
+        ->where([
+            ['category', '=', $category],
+            ['name', 'like', "%" . $search . "%"]
+        ])
+        ->get();
+
+        return response()->json([
+            'message' => 'Success',
+            'errors' => false,
+            'data' => $product,
+        ]);
+
+    }
 
     // public function categoryProduct(Request $request)
     // {
@@ -51,6 +69,7 @@ class FoodController extends Controller
                 $upload = new Foods();
                 $upload->id_admin_user = $request->id_admin_user;
                 $upload->name = $request->name;
+                $upload->category = $request->category;
                 $upload->image = $filename;
                 $upload->description = $request->description;
                 $upload->recipe = $request->recipe;
@@ -89,6 +108,7 @@ class FoodController extends Controller
 
         $edit = Foods::find($request->id);
         $edit->name = $request->name;
+        $edit->category = $request->category;
         $edit->description = $request->description;
         $edit->recipe = $request->recipe;
         $edit->save();

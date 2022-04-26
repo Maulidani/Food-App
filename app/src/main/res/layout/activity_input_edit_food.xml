@@ -19,7 +19,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imgFood"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
                 android:layout_margin="24dp"
                 android:src="@drawable/logo"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -52,13 +52,31 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/categoryTextField"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:background="@color/white"
+                android:hint="Kategori"
+                app:layout_constraintTop_toBottomOf="@id/nameTextField">
+
+                <AutoCompleteTextView
+                    android:id="@+id/inputCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/descriptionTextField"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="24dp"
                 android:hint="Deskripsi"
-                app:layout_constraintTop_toBottomOf="@id/nameTextField">
+                app:layout_constraintTop_toBottomOf="@id/categoryTextField">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputFoodDescription"

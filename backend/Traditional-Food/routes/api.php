@@ -28,6 +28,7 @@ Route::post('edit-image', 'App\Http\Controllers\UserController@editImage');
 
 //food
 Route::post('show-food', 'App\Http\Controllers\FoodController@index');
+Route::post('show-food-category', 'App\Http\Controllers\FoodController@indexCategory');
 Route::post('upload-food', 'App\Http\Controllers\FoodController@upload');
 Route::post('edit-food', 'App\Http\Controllers\FoodController@edit');
 Route::post('edit-image-food', 'App\Http\Controllers\FoodController@editImage');

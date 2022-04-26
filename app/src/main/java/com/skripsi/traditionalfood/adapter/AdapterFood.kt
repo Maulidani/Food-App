@@ -64,6 +64,7 @@ class AdapterFood(
                     Intent(itemView.context, FoodDetailActivity::class.java)
                         .putExtra("id", result.id.toString())
                         .putExtra("name", result.name)
+                        .putExtra("category", result.category)
                         .putExtra("image", result.image)
                         .putExtra("description", result.description)
                         .putExtra("recipe", result.recipe)
@@ -100,6 +101,7 @@ class AdapterFood(
                             .putExtra("type", "edit")
                             .putExtra("id", result.id.toString())
                             .putExtra("name", result.name)
+                            .putExtra("category", result.category)
                             .putExtra("image", result.image)
                             .putExtra("description", result.description)
                             .putExtra("recipe", result.recipe), null

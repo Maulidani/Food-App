@@ -44,11 +44,15 @@ class LoginAdminActivity : AppCompatActivity() {
             login(email, password, type)
         }
     }
+
     private fun login(email: String, password: String, type: String) {
 
         ApiClient.instances.login(email, password, type)
             .enqueue(object : Callback<ResponseAuthModel> {
-                override fun onResponse(call: Call<ResponseAuthModel>, response: Response<ResponseAuthModel>) {
+                override fun onResponse(
+                    call: Call<ResponseAuthModel>,
+                    response: Response<ResponseAuthModel>
+                ) {
 
                     val message = response.body()?.message
                     val error = response.body()?.errors
@@ -60,7 +64,8 @@ class LoginAdminActivity : AppCompatActivity() {
                             saveSession(data!!)
                         } else {
 
-                            Toast.makeText(this@LoginAdminActivity, "gagal", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@LoginAdminActivity, "gagal", Toast.LENGTH_SHORT)
+                                .show()
 
                         }
                     } else {
@@ -71,11 +76,16 @@ class LoginAdminActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<ResponseAuthModel>, t: Throwable) {
 
-                    Toast.makeText(this@LoginAdminActivity, t.message.toString(), Toast.LENGTH_SHORT)
+                    Toast.makeText(
+                        this@LoginAdminActivity,
+                        t.message.toString(),
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                 }
             })
     }
+
     private fun saveSession(data: DataModel) {
 
         sharedPref.put(Constant.PREF_ID, data.id.toString())
@@ -94,7 +104,8 @@ class LoginAdminActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
+        startActivity(Intent(this, SplashScreenActivity::class.java))
+        finish()
         return true
     }
 }

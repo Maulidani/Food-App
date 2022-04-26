@@ -70,8 +70,8 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@drawable/logo"
+        android:layout_height="120dp"
+        android:src="@drawable/food"
         app:layout_constraintBottom_toBottomOf="@+id/emailTextField"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -6,9 +6,7 @@ import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import coil.load
@@ -38,6 +36,7 @@ class InputEditFoodActivity : AppCompatActivity() {
     private val imgFood: ImageView by lazy { findViewById(R.id.imgFood) }
     private val btnChooseFoto: MaterialButton by lazy { findViewById(R.id.btnChooseFoto) }
     private val tvFoodName: TextInputEditText by lazy { findViewById(R.id.inputFoodName) }
+    private val inputCategory: AutoCompleteTextView by lazy { findViewById(R.id.inputCategory) }
     private val tvFoodDesc: TextInputEditText by lazy { findViewById(R.id.inputFoodDescription) }
     private val tvRecipe: TextInputEditText by lazy { findViewById(R.id.inputFoodRecipe) }
     private val btnAdd: MaterialButton by lazy { findViewById(R.id.btnAddFood) }
@@ -48,6 +47,9 @@ class InputEditFoodActivity : AppCompatActivity() {
     private lateinit var intentType: String
     private var id: String = ""
 
+    var categoryFood: ArrayList<String> =
+        arrayListOf("makanan", "kue")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_input_edit_food)
@@ -56,6 +58,13 @@ class InputEditFoodActivity : AppCompatActivity() {
 
         intentType = intent.getStringExtra("type").toString()
 
+        val adapterListCategory = ArrayAdapter(
+            applicationContext,
+            R.layout.support_simple_spinner_dropdown_item,
+            categoryFood
+        )
+        inputCategory.setAdapter(adapterListCategory)
+
         if (intentType == "edit") {
             supportActionBar?.title = "Edit"
 
@@ -63,6 +72,7 @@ class InputEditFoodActivity : AppCompatActivity() {
 
             id = intent.getStringExtra("id").toString()
             val name = intent.getStringExtra("name")
+            val categoryFood = intent.getStringExtra("category")
             val desc = intent.getStringExtra("description")
             val recipe = intent.getStringExtra("recipe")
             val img = intent.getStringExtra("image")
@@ -77,6 +87,7 @@ class InputEditFoodActivity : AppCompatActivity() {
 
                 if (tvFoodName.text.toString().isEmpty() || tvFoodDesc.text.toString()
                         .isEmpty() || tvRecipe.text.toString()
+                        .isEmpty() || inputCategory.text.toString()
                         .isEmpty()
                 ) {
                     Toast.makeText(applicationContext, "tidak boleh kosong", Toast.LENGTH_SHORT)
@@ -84,6 +95,7 @@ class InputEditFoodActivity : AppCompatActivity() {
                 } else {
                     edit(
                         tvFoodName.text.toString(),
+                        inputCategory.text.toString(),
                         tvFoodDesc.text.toString(),
                         tvRecipe.text.toString(),
                         id!!
@@ -99,6 +111,7 @@ class InputEditFoodActivity : AppCompatActivity() {
             btnAdd.setOnClickListener {
                 if (tvFoodName.text.toString().isEmpty() || tvFoodDesc.text.toString()
                         .isEmpty() || tvRecipe.text.toString()
+                        .isEmpty() || inputCategory.text.toString()
                         .isEmpty()
                 ) {
                     Toast.makeText(applicationContext, "tidak boleh kosong", Toast.LENGTH_SHORT)
@@ -110,6 +123,7 @@ class InputEditFoodActivity : AppCompatActivity() {
                 } else {
                     upload(
                         tvFoodName.text.toString(),
+                        inputCategory.text.toString(),
                         tvFoodDesc.text.toString(),
                         tvRecipe.text.toString(),
                     )
@@ -129,12 +143,13 @@ class InputEditFoodActivity : AppCompatActivity() {
 
     private fun edit(
         name: String,
+        category: String,
         desc: String,
         recipe: String,
         id: String
     ) {
 
-        ApiClient.instances.editFood(name, desc, recipe, id.toInt())
+        ApiClient.instances.editFood(name, category, desc, recipe, id.toInt())
             .enqueue(object :
                 Callback<ResponseFoodModel> {
                 override fun onResponse(
@@ -151,6 +166,7 @@ class InputEditFoodActivity : AppCompatActivity() {
                             ).show()
 
                             finish()
+
                         } else {
                             Toast.makeText(applicationContext, "gagal", Toast.LENGTH_SHORT).show()
                         }
@@ -207,6 +223,7 @@ class InputEditFoodActivity : AppCompatActivity() {
 
     private fun upload(
         name: String,
+        category: String,
         desc: String,
         recipe: String,
     ) {
@@ -214,10 +231,18 @@ class InputEditFoodActivity : AppCompatActivity() {
 
         val partId: RequestBody = idAdmin!!.toRequestBody("text/plain".toMediaTypeOrNull())
         val partName: RequestBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partCategory: RequestBody = category.toRequestBody("text/plain".toMediaTypeOrNull())
         val parDesc: RequestBody = desc.toRequestBody("text/plain".toMediaTypeOrNull())
         val partRecipe: RequestBody = recipe.toRequestBody("text/plain".toMediaTypeOrNull())
 
-        ApiClient.instances.uploadFood(partId, partName, partImage!!, parDesc, partRecipe)
+        ApiClient.instances.uploadFood(
+            partId,
+            partName,
+            partCategory,
+            partImage!!,
+            parDesc,
+            partRecipe
+        )
             .enqueue(object :
                 Callback<ResponseFoodModel> {
                 override fun onResponse(

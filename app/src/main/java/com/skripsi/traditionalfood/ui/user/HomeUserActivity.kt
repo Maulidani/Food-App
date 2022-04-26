@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.GridLayoutManager
@@ -30,120 +31,28 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeUserActivity : AppCompatActivity(), AdapterFood.IUserRecycler {
-    private lateinit var sharedPref: PreferencesHelper
+class HomeUserActivity : AppCompatActivity() {
 
-    private val rv: RecyclerView by lazy { findViewById(R.id.rvFood) }
-    private val search: EditText by lazy { findViewById(R.id.etSearch) }
-    private val notFound: TextView by lazy { findViewById(R.id.tvNotFound) }
-
-    private val imgMore: ImageView by lazy { findViewById(R.id.imgMore) }
+    val cardMakanan: CardView by lazy { findViewById(R.id.cardMakanan) }
+    val cardKue: CardView by lazy { findViewById(R.id.cardKue) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_user)
         supportActionBar?.hide()
 
-        sharedPref = PreferencesHelper(this)
-
-        search.addTextChangedListener {
-            food(search.text.toString())
+        cardMakanan.setOnClickListener {
+            startActivity(
+                Intent(this, ListFoodUserActivity::class.java)
+                    .putExtra("category", "makanan")
+            )
         }
-
-        food("")
-
-        imgMore.setOnClickListener {
-            optionAlert()
-        }
-    }
-
-    private fun optionAlert() {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setTitle("Aksi")
-
-        val options = arrayOf("Profil", "Logout")
-        builder.setItems(
-            options
-        ) { _, which ->
-            when (which) {
-                0 -> {
-                    startActivity(
-                        Intent(this, ProfileActivity::class.java).putExtra(
-                            "type",
-                            "edit"
-                        )
-                    )
-                }
-                1 -> {
-                    sharedPref.logout()
-                    Toast.makeText(this, "Keluar", Toast.LENGTH_SHORT).show()
-                    startActivity(
-                        Intent(this, LoginActivity::class.java)
-                    )
-                    finish()
-                }
-            }
-        }
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
-    }
-
-
-    private fun food(searchString: String) {
-        val type = sharedPref.getString(Constant.PREF_TYPE)
-
-        ApiClient.instances.showFood(searchString).enqueue(object : Callback<ResponseFoodModel> {
-            override fun onResponse(
-                call: Call<ResponseFoodModel>,
-                response: Response<ResponseFoodModel>
-            ) {
-                val message = response.body()?.message
-                val error = response.body()?.errors
-                val data = response.body()?.data
-
-                if (response.isSuccessful) {
-
-                    if (error == false) {
-
-                        val adapter = data?.let { AdapterFood(it, type!!, this@HomeUserActivity) }
-                        rv.layoutManager = GridLayoutManager(this@HomeUserActivity, 2)
-                        rv.adapter = adapter
-
-                        if ("${data?.size}" == "0") {
-                            notFound.visibility = View.VISIBLE
-                        }
-                        else {
-                            notFound.visibility = View.INVISIBLE
-                        }
-
-                    } else {
-                        Toast.makeText(this@HomeUserActivity, "gagal", Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-
-                    Toast.makeText(this@HomeUserActivity, "gagal", Toast.LENGTH_SHORT).show()
-
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseFoodModel>, t: Throwable) {
-
-                Toast.makeText(this@HomeUserActivity, t.message.toString(), Toast.LENGTH_SHORT)
-                    .show()
-            }
-
-        })
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        if (!sharedPref.getBoolean(Constant.PREF_IS_LOGIN)) {
-            finish()
+        cardKue.setOnClickListener {
+            startActivity(
+                Intent(this, ListFoodUserActivity::class.java)
+                    .putExtra("category", "kue")
+            )
         }
     }
 
-    override fun refreshView(onUpdate: Boolean) {
-        food("")
-    }
 }

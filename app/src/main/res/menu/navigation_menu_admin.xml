@@ -6,6 +6,6 @@
         android:title="Profile" />
     <item
         android:id="@+id/navLogout"
-        android:title="Keluar" />
+        android:title="Keluar / Logout" />
 
 </menu>

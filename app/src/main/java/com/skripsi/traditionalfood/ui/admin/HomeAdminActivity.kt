@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.cardview.widget.CardView
 import androidx.core.widget.addTextChangedListener
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,30 +23,43 @@ import com.skripsi.traditionalfood.adapter.AdapterFood
 import com.skripsi.traditionalfood.model.ResponseFoodModel
 import com.skripsi.traditionalfood.network.ApiClient
 import com.skripsi.traditionalfood.ui.LoginActivity
+import com.skripsi.traditionalfood.ui.LoginAdminActivity
 import com.skripsi.traditionalfood.ui.ProfileActivity
+import com.skripsi.traditionalfood.ui.user.ListFoodUserActivity
 import com.skripsi.traditionalfood.utils.Constant
 import com.skripsi.traditionalfood.utils.PreferencesHelper
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeAdminActivity : AppCompatActivity(), AdapterFood.IUserRecycler {
+class HomeAdminActivity : AppCompatActivity() {
     private lateinit var sharedPref: PreferencesHelper
 
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
-
-    private val rv: RecyclerView by lazy { findViewById(R.id.rvFood) }
-    private val search: EditText by lazy { findViewById(R.id.etSearch) }
-    private val notFound: TextView by lazy { findViewById(R.id.tvNotFound) }
-
     private val fabAdd: FloatingActionButton by lazy { findViewById(R.id.fabAdd) }
+
+    val cardMakanan: CardView by lazy { findViewById(R.id.cardMakanan) }
+    val cardKue: CardView by lazy { findViewById(R.id.cardKue) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_admin)
         sharedPref = PreferencesHelper(this)
+
+        cardMakanan.setOnClickListener {
+            startActivity(
+                Intent(this, ListFoodAdminActivity::class.java)
+                    .putExtra("category", "makanan")
+            )
+        }
+        cardKue.setOnClickListener {
+            startActivity(
+                Intent(this, ListFoodAdminActivity::class.java)
+                    .putExtra("category", "kue")
+            )
+        }
 
         drawerLayout = findViewById(R.id.drawerLayout)
         navigationView = findViewById(R.id.navView)
@@ -55,6 +69,10 @@ class HomeAdminActivity : AppCompatActivity(), AdapterFood.IUserRecycler {
         toggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        fabAdd.setOnClickListener {
+            startActivity(Intent(this, InputEditFoodActivity::class.java).putExtra("type", "add"))
+        }
 
         navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -70,7 +88,7 @@ class HomeAdminActivity : AppCompatActivity(), AdapterFood.IUserRecycler {
                     sharedPref.logout()
                     Toast.makeText(this, "Keluar", Toast.LENGTH_SHORT).show()
                     startActivity(
-                        Intent(this, LoginActivity::class.java)
+                        Intent(this, LoginAdminActivity::class.java)
                     )
                     finish()
                 }
@@ -78,15 +96,6 @@ class HomeAdminActivity : AppCompatActivity(), AdapterFood.IUserRecycler {
             true
         }
 
-        search.addTextChangedListener {
-            food(search.text.toString())
-        }
-
-        food("")
-
-        fabAdd.setOnClickListener {
-            startActivity(Intent(this, InputEditFoodActivity::class.java).putExtra("type", "add"))
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -99,62 +108,12 @@ class HomeAdminActivity : AppCompatActivity(), AdapterFood.IUserRecycler {
     }
 
 
-    private fun food(searchString: String) {
-        val type = sharedPref.getString(Constant.PREF_TYPE)
-
-        ApiClient.instances.showFood(searchString).enqueue(object : Callback<ResponseFoodModel> {
-            override fun onResponse(
-                call: Call<ResponseFoodModel>,
-                response: Response<ResponseFoodModel>
-            ) {
-                val message = response.body()?.message
-                val error = response.body()?.errors
-                val data = response.body()?.data
-
-                if (response.isSuccessful) {
-
-                    if (error == false) {
-
-                        val adapter =
-                            data?.let { AdapterFood(it, type!!, this@HomeAdminActivity) }
-                        rv.layoutManager = GridLayoutManager(this@HomeAdminActivity, 2)
-                        rv.adapter = adapter
-
-                        if ("${data?.size}" == "0") {
-                            notFound.visibility = View.VISIBLE
-                        } else {
-                            notFound.visibility = View.INVISIBLE
-                        }
-
-                    } else {
-                        Toast.makeText(this@HomeAdminActivity, "gagal", Toast.LENGTH_SHORT).show()
-                    }
-                } else {
-
-                    Toast.makeText(this@HomeAdminActivity, "gagal", Toast.LENGTH_SHORT).show()
-
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseFoodModel>, t: Throwable) {
-
-                Toast.makeText(this@HomeAdminActivity, t.message.toString(), Toast.LENGTH_SHORT)
-                    .show()
-            }
-
-        })
-    }
-
     override fun onResume() {
         super.onResume()
-        food("")
 
         if (!sharedPref.getBoolean(Constant.PREF_IS_LOGIN)) {
             finish()
         }
     }
 
-    override fun refreshView(onUpdate: Boolean) {
-        food("")
-    }
 }
