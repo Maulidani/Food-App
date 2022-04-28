@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="first">#219F94</color>
-    <color name="second">#C1DEAE</color>
-    <color name="third">#F2F5C8</color>
-    <color name="forth">#E8E8A6</color>
+    <color name="first">#3949AB</color>
+    <color name="second">#1E88E5</color>
+    <color name="third">#1E88E5</color>
+    <color name="forth">#00897B</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="blackTransparant">#B0000000</color>

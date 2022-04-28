@@ -19,28 +19,37 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginBottom="24dp"
-            android:gravity="center"
-            android:text="Makanan Tradisional Wakatobi"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/btnGetStarted" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvInfo2"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
             android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:background="@color/blackTransparant"
             android:gravity="center"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="6dp"
+            android:text="Makanan Tradisional Wakatobi"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/btnGetStarted"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvInfo2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/blackTransparant"
+            android:gravity="center"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="6dp"
             android:text="Hello, Welcome to Kuliner Wakatobi"
             android:textColor="@color/white"
-            android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnGetStarted" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -50,12 +59,12 @@
             android:layout_marginHorizontal="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
+            android:background="@color/blackTransparant"
             android:gravity="center"
             android:paddingHorizontal="24dp"
+            android:paddingVertical="6dp"
             android:text="Masuk Admin"
             android:textColor="@color/white"
-            android:textSize="18sp"
-            android:background="@color/blackTransparant"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
