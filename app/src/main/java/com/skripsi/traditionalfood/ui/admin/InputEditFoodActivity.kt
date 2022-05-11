@@ -60,7 +60,7 @@ class InputEditFoodActivity : AppCompatActivity() {
 
         val adapterListCategory = ArrayAdapter(
             applicationContext,
-            R.layout.support_simple_spinner_dropdown_item,
+            R.layout.list_dropdown,
             categoryFood
         )
         inputCategory.setAdapter(adapterListCategory)

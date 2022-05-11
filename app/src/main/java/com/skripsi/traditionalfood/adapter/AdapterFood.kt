@@ -37,7 +37,6 @@ class AdapterFood(
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val name: TextView by lazy { itemView.findViewById(R.id.tvFoodName) }
-        val img: ImageView by lazy { itemView.findViewById(R.id.imgFoods) }
         val icMore: ImageView by lazy { itemView.findViewById(R.id.imgMore) }
         val item: CardView by lazy { itemView.findViewById(R.id.itemCardProduct) }
 
@@ -55,9 +54,6 @@ class AdapterFood(
             }
 
             name.text = result.name
-            var linkImage = "${Constant.URL_IMAGE_FOOD}${result.image}"
-            img.load(linkImage)
-            linkImage = ""
 
             item.setOnClickListener {
                 itemView.context.startActivity(

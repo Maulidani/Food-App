@@ -14,8 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/bg_login"
-            app:srcCompat="@drawable/bg_login" />
+            android:src="@drawable/bg_splash"
+            app:srcCompat="@drawable/bg_splash" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvInfo"

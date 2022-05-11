@@ -38,10 +38,8 @@ class HomeAdminActivity : AppCompatActivity() {
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
-    private val fabAdd: FloatingActionButton by lazy { findViewById(R.id.fabAdd) }
 
     val cardMakanan: CardView by lazy { findViewById(R.id.cardMakanan) }
-    val cardKue: CardView by lazy { findViewById(R.id.cardKue) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,13 +49,6 @@ class HomeAdminActivity : AppCompatActivity() {
         cardMakanan.setOnClickListener {
             startActivity(
                 Intent(this, ListFoodAdminActivity::class.java)
-                    .putExtra("category", "makanan")
-            )
-        }
-        cardKue.setOnClickListener {
-            startActivity(
-                Intent(this, ListFoodAdminActivity::class.java)
-                    .putExtra("category", "kue")
             )
         }
 
@@ -69,10 +60,6 @@ class HomeAdminActivity : AppCompatActivity() {
         toggle.syncState()
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        fabAdd.setOnClickListener {
-            startActivity(Intent(this, InputEditFoodActivity::class.java).putExtra("type", "add"))
-        }
 
         navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {

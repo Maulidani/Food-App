@@ -34,7 +34,6 @@ import retrofit2.Response
 class HomeUserActivity : AppCompatActivity() {
 
     val cardMakanan: CardView by lazy { findViewById(R.id.cardMakanan) }
-    val cardKue: CardView by lazy { findViewById(R.id.cardKue) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,15 +43,9 @@ class HomeUserActivity : AppCompatActivity() {
         cardMakanan.setOnClickListener {
             startActivity(
                 Intent(this, ListFoodUserActivity::class.java)
-                    .putExtra("category", "makanan")
             )
         }
-        cardKue.setOnClickListener {
-            startActivity(
-                Intent(this, ListFoodUserActivity::class.java)
-                    .putExtra("category", "kue")
-            )
-        }
+
     }
 
 }
